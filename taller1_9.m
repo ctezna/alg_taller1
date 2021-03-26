@@ -1,4 +1,10 @@
-clear all
+% Describa y ejecute un proceso de identificaci ́on de outliers
+% en variables binarias. Util ́ıcelo para identi-ficar qu ́e meses
+% en portfolio100, versi ́on binario siendo 1 si hay valor positivo,
+% son considerados mesesat ́ıpicos.
+
+
+clear;
 
 importedData = importdata('portfolio100.txt');
 data = importedData(:,2:end);

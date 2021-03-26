@@ -1,4 +1,10 @@
-clear all
+% El fichero (porfolio100.txt) tiene rentabilidades mensuales para100
+% sectores econ ́omicos, desde juliode 1963 hasta febrero de 2019, 
+% un total de 668 registros. Realiceun an ́alisis de identificaci ́on 
+% deoutliers utilizando los tres m ́etodos del punto anterior y el 
+% m ́etodo de m ́ınima curtosis con la salidaidx. Comente los resultados.
+
+clear;
 % data import 
 importedData = importdata('portfolio100.txt');
 
@@ -55,13 +61,13 @@ outliers_cur = find(idx == 1);
 
 for i=1:nf
     disp(i)
-    pos = (outliers_cur(i,1))
+    pos = (outliers_cur(i,1));
 
     m = months(pos,1);
     out_idx(i) = m;
 end
 
-out_idx = out_idx'
+out_idx = out_idx';
 
 
 % plot(D,'o')
@@ -88,13 +94,7 @@ subplot(4,1,3)
 plot3(D(:,10), D(:,91), D(:,92),'ob')
 hold on
 plot3(D(I_cur,10), D(I_cur,91), D(I_cur,92), 'or');
-title("Outliers - distancia Mahalanobis cov mínima curtosis");
-
-subplot(4,1,3)
-plot3(D(:,10), D(:,91), D(:,92),'ob')
-hold on
-plot3(D(I_cur,10), D(I_cur,91), D(I_cur,92), 'or');
-title("Outliers - distancia Mahalanobis cov mínima curtosis");
+title("Outliers - Mahalanobis cov mínima curtosis");
 
 subplot(4,1,4)
 plot3(D(:,10), D(:,91), D(:,92),'ob')

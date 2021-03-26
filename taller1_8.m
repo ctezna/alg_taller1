@@ -1,4 +1,14 @@
-clear all
+% En el fichero (porfolio100.txt), saque la media de cada fila, 
+% es decir el vector de media ser ́a un vectorde 668×1. Defina la
+% variable binaria como 1 donde el vector de medias es mayora 1.5
+% y cero enotro caso. Defina la matriz binaria que vale 1 si en
+% portfolio100 hay unvalor positivo y cero en otrocaso. Con las 
+% m ́etricas binarias (Pearson, Jaccard y Dice) identifique los 10
+% activos m ́as parecidos ylos 10 menos parecidos al vector binario
+% de medias.
+
+
+clear;
 % data import 
 importedData = importdata('portfolio100.txt');
 data = importedData(:,2:end);

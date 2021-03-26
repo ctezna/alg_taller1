@@ -1,74 +1,45 @@
-%&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% PUNTO 14
-%&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Sea Hn(i, j) = 1 i+j−1, llamada la matriz de Hilbert. Simule 1000 datos
-% normales con matriz de covarianza Hn. Estime la matriz de covarianzas desde
-% los datos simulados. Realice una gráfica de n en el eje x con el número 
-% condición de la matriz de covarianza estimada en el eje y. 
-% Qué tipo de comportamiento observa. Haga lo mismo para su determinante. 
-% Realice lo mismo estimando la matriz de covarianza utilizando el shrinkage 
-% de Ledoit and Wolf.Compare los resultados. Haga un análisis gráfico y 
-% de visualización donde se observe si al final el shrinkage mejora 
-% el número condición.
-%&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% Sea Hn(i, j) =1/i+j−1, llamada la matriz de Hilbert. Simule 1000 datos normales con matriz decovarianza Hn. 
+% Estime la matriz de covarianzas desde los datos simulados. Realice una gr ́afica denen el ejexcon el n ́umero 
+% condici ́on de la matriz de covarianza estimada en el ejey. Qu ́e tipode comportamiento observa.
+% Haga lo mismo para su determinante. Realice lo mismo estimando lamatriz de covarianza utilizando
+% el shrinkage de Ledoit and Wolf. Compare los resultados. Haga unan ́alsis gr ́afico y de visualizaci ́on 
+% donde se observe si al final el shrinkage mejora el n ́umero condici ́on.
 clear;
-ND = 1000;
-N = 30
-
-
-
-for n=1:N
+for n=1:20
     
-    Hn = hilb(n);
-    mu = zeros(1,n);
-    x = mvnrnd(mu,Hn,ND); % contruir datos con esa matriz de covarianza
-    cov_x = cov(x); % covarianza muestral
-    [cov_LW,shrinkage] = cov1para(x);
+    h = hilb(n);
+    mu = zeros(1, n);
+    x = mvnrnd(mu, h, 1000);
+    h_shrink = cov1para(x, -1);
     
-    cov_condi(n) = cond(cov_x);
-    cov_det(n) = det(cov_x);
-     
-    cov_LW_condi(n) = cond(cov_LW);
-    cov_LW_det(n) = det(cov_LW);
+    h_cond(n) = cond(h);
+    h_det(n) = det(h);
+    
+    h_shrink_cond(n) = cond(h_shrink);
+    h_shrink_det(n) = det(h_shrink);
     
 end
 
-close all
-%condicion
-figure(1)
-semilogy(cov_condi,"r");
-hold on
-semilogy(cov_LW_condi,"b");
-title("Comparacion numeros condicionantes")
+subplot(2,2,1)
+plot(h_cond, 'r')
+title("Hilbert")
 xlabel("n")
-ylabel("Condicionante")
-legend("Datos Hilb-cov","Datos shrinkage L&W",'Location','northwest')
+ylabel("Condition number")
 
-
-%determiante
-figure(2)
-semilogy(cov_det,"r");
-hold on
-semilogy(cov_LW_det,"b");
-title("Comparacion determinantes")
+subplot(2,2,2)
+plot(h_shrink_cond, 'b')
+title("Shrinked Hilbert")
 xlabel("n")
-ylabel("determinante")
-legend("Datos Hilb-cov","Datos shrinkage L&W",'Location','southwest')
+ylabel("Condition number")
 
-% 
-% for j=1:5
-%     H = hilb(j)
-%     mu=zeros(1,j);
-%     x=mvnrnd(mu,H,500)
-%     C=cov(x)
-%     [CLW,shrinkage] = cov1para(x);
-%     condiC(j) =cond(C);
-%     condiLW(j)=cond(CLW);
-%     deteC(j)=det(C);
-%     deteLW(j)=det(CLW);
-% end
-% 
-% plot(condiC)
-% hold on
-% plot(condiLW,"r")
+subplot(2,2,3)
+plot(h_det, 'r')
+%title("Hilbert")
+xlabel("n")
+ylabel("Determinant")
+
+subplot(2,2,4)
+plot(h_shrink_det, 'b')
+%title("Determinant - Shrinked Hilbert")
+xlabel("n")
+ylabel("Determinant")
